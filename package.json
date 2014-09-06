@@ -1,7 +1,7 @@
 {
   "name": "polish-notation",
   "version": "0.0.1",
-  "description": "A simple polish notation calculator.",
+  "description": "A simple polish notation calculator for JavaScript",
   "main": "calculator.js",
   "scripts": {
     "test": "gulp test"
@@ -9,7 +9,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/paulredmond/polish-notation-js"
-  }
+  },
   "author": "Paul Redmond",
   "license": "MIT",
   "devDependencies": {
