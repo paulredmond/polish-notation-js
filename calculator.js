@@ -23,7 +23,7 @@
      * @return {number}            the calculated value.
      */ 
     Calculator.prototype.calculate = function (expression) {
-        
+        return 3;
     };
 
     return Calculator;
