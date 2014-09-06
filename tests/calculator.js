@@ -28,6 +28,11 @@ describe('Polish Notation Calculator', function () {
             expect(subject.calculate('(* 10 0)')).to.eql(0);
             expect(subject.calculate('(* 10 5)')).to.eql(50);
         });
+
+        it ('should calculate complex nesting', function () {
+            expect(subject.calculate('(* (+ 2 3) (- 10 6))')).to.eql(20);
+            expect(subject.calculate('(+ 1 (+ 2 (+ 3 (+ 4 5))))')).to.eql(15);
+        });
     });
 });
 
