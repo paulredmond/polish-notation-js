@@ -33,6 +33,12 @@ describe('Polish Notation Calculator', function () {
             expect(subject.calculate('(* (+ 2 3) (- 10 6))')).to.eql(20);
             expect(subject.calculate('(+ 1 (+ 2 (+ 3 (+ 4 5))))')).to.eql(15);
         });
+
+        it ('should accept decimals and integers', function () {
+            expect(subject.calculate('(+ 2.5 2)')).to.eql(4.5);
+            expect(subject.calculate('(+ 5.4443 2)')).to.eql(7.4443);
+            expect(subject.calculate('(* 2.5 2)')).to.eql(5);
+        });
     });
 });
 
