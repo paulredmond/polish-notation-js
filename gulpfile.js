@@ -3,7 +3,7 @@ var gulp = require('gulp'),
 
 gulp.task('test', function () {
     return gulp.src('tests/**/*.js', { read: false })
-        .pipe(mocha({ reporter: 'nyan' }))
+        .pipe(mocha())
 });
 
 gulp.task('default', ['test']);

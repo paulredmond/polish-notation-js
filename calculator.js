@@ -13,69 +13,60 @@
         context[name] = definition();
     }
 })('polishNotation', this, function () {
-    var Calculator = function () {};
+    var Calculator = function () {},
+        Parser = {
+            lexer: function (expression) {
+                var tokens = expression.match(/\(|\)|\d+(\.\d+)?|\w+|[+*\/-]/g);
 
-    var Parser = {
-        parse: function (expression) {
-            var pieces = expression.split(/[\s\(\)]/),
-                start  = pieces.length - 1,
-                stack  = [];
+                return tokens.map(function (token) {
+                    return /^\d/.test(token) ? parseFloat(token) : token;
+                });
+            },
+            parse: function (expression) {
+                var tokens = Parser.lexer(expression),
+                    start  = tokens.length - 1,
+                    stack  = [];
 
-            for (var i = start, subject; i >= 0; i--) {
-                subject = pieces[i];
-                if (Parser.isAnOperand(subject) === true) {
-                    stack.unshift(parseFloat(subject));
-                } else if (Parser.isAnOperator(subject)) {
-                    stack.unshift(
-                        parseFloat(
-                            Parser._doOperation(subject, stack.splice(0,2))
-                        )
-                    );
+                for (var i = start, token; i >= 0; i--) {
+                    token = tokens[i];
+                    if (Parser.isAnOperand(token) === true) {
+                        stack.unshift(token);
+                    } else if (Parser.isAnOperator(token)) {
+                        stack.unshift(Parser._doOperation(token, stack.shift(), stack.shift()));
+                    }
                 }
+
+                return stack.shift();
+            },
+
+            _doOperation: function (operator, x, y) {
+                return Parser[operator](x, y);
+            },
+
+            isAnOperand: function (subject) {
+                return (subject - parseFloat(subject) + 1) >= 0;
+            },
+
+            isAnOperator: function (subject) {
+                return /^[\+\*\/-]$/.test(subject);
+            },
+            "+": function (x, y) {
+                return x + y;
+            },
+            "-": function (x, y) {
+                return x - y;
+            },
+            "/": function (x, y) {
+                if (y === 0) {
+                    throw new Error('Division by zero error.');
+                }
+
+                return x / y;
+            },
+            "*": function (x, y) {
+                return x * y;
             }
-
-            return parseFloat(stack.shift());
-        },
-
-        _doOperation: function (operator, subjects) {
-            var x, y;
-            if (typeof subjects !== 'object' || subjects.length !== 2) {
-                throw new Error(
-                    'Operation requires two values. ' +
-                    'Had ' + subjects.length + 'values (' + subjects.join(' ') + ')'
-                );
-            }
-
-            x = parseInt(subjects.splice(0,1), 10);
-            y = parseInt(subjects.splice(0,1), 10);
-
-            return Parser[operator](x, y);
-        },
-
-        isAnOperand: function (subject) {
-            return (subject - parseFloat(subject) + 1) >= 0;
-        },
-
-        isAnOperator: function (subject) {
-            return /^[\+\*\/-]$/.test(subject);
-        },
-        "+": function (x, y) {
-            return x + y;
-        },
-        "-": function (x, y) {
-            return x - y;
-        },
-        "/": function (x, y) {
-            if (y === 0) {
-                throw new Error('Division by zero error.');
-            }
-
-            return x / y;
-        },
-        "*": function (x, y) {
-            return x * y;
-        }
-    };
+        };
     
     /**
      * Calculates a prefix notation string returning an integer value.
