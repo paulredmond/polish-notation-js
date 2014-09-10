@@ -1,0 +1,22 @@
+{
+  "name": "polish-notation-js",
+  "main": "calculator.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/paulredmond/polish-notation-js",
+  "authors": [
+    "Paul Redmond <paulrredmond@gmail.com>"
+  ],
+  "description": "A simple polish notation calculator for JavaScript",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
