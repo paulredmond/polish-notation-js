@@ -1,6 +1,6 @@
 {
   "name": "polish-notation",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple polish notation calculator for JavaScript",
   "main": "calculator.js",
   "scripts": {
